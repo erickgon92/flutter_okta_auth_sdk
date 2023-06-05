@@ -25,7 +25,7 @@ fun createConfig(arguments: Map<String, Any>, context: Context) {
                 .withConfig(config)
                 .withContext(context)
                 .withStorage(SharedPreferenceStorage(context))
-                .supportedBrowsers("com.android.chrome", "org.mozilla.firefox")
+                .supportedBrowsers("com.android.browser", "com.android.chrome", "org.mozilla.firefox", "com.opera.browser", "com.microsoft.emmx", "com.sec.android.app.sbrowser", "com.UCMobile.intl", "com.brave.browser", "com.oneplus.browser")
                 .withOktaHttpClient(HttpClientImpl(params.userAgentTemplate))
                 .setRequireHardwareBackedKeyStore(params.requireHardwareBackedKeyStore)
                 .create()
