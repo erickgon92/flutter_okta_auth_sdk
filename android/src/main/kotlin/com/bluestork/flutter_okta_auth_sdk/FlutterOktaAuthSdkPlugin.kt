@@ -17,6 +17,7 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.PluginRegistry
+import io.flutter.plugin.common.PluginRegistry.Registrar
 
 /** FlutterOktaAuthSdkPlugin */
 
@@ -33,10 +34,22 @@ class FlutterOktaAuthSdkPlugin : FlutterPlugin, MethodCallHandler,
     // plugin registration via this function while apps migrate to use the new Android APIs
     // post-Flutter-1.12 via https://flutter.dev/go/android-project-migration.
     @Suppress("DEPRECATION")
-    fun registerWith(registrar: PluginRegistry.Registrar) {
+    fun registerWith(registrar: Registrar) {
       val plugin = FlutterOktaAuthSdkPlugin()
-      registrar.activity()?.let { plugin.setActivity(it) }
-      plugin.onAttachedToEngine(registrar.context(), registrar.messenger())
+      
+      // Get the activity from the registrar
+      val activity = registrar.activity()
+      if (activity != null) {
+        plugin.setActivity(activity)
+      }
+      
+      // Setup the plugin
+      val channel = MethodChannel(registrar.messenger(), "flutter_okta_auth_sdk")
+      channel.setMethodCallHandler(plugin)
+      plugin.applicationContext = registrar.context()
+      plugin.channel = channel
+      
+      // Add the activity result listener
       registrar.addActivityResultListener(plugin)
     }
   }
