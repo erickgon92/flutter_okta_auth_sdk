@@ -28,9 +28,14 @@ class FlutterOktaAuthSdkPlugin : FlutterPlugin, MethodCallHandler,
   private var mainActivity: Activity? = null
 
   companion object {
+    // This static function is optional and equivalent to onAttachedToEngine. It supports the old
+    // pre-Flutter-1.12 Android projects. You are encouraged to continue supporting
+    // plugin registration via this function while apps migrate to use the new Android APIs
+    // post-Flutter-1.12 via https://flutter.dev/go/android-project-migration.
+    @Suppress("DEPRECATION")
     fun registerWith(registrar: PluginRegistry.Registrar) {
       val plugin = FlutterOktaAuthSdkPlugin()
-      registrar.activity()?.let { plugin.setActivity(it) } //error
+      registrar.activity()?.let { plugin.setActivity(it) }
       plugin.onAttachedToEngine(registrar.context(), registrar.messenger())
       registrar.addActivityResultListener(plugin)
     }

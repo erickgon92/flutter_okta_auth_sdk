@@ -14,7 +14,7 @@ class FlutterOktaAuthSdkWeb {
     final MethodChannel channel = MethodChannel(
       'flutter_okta_auth_sdk',
       const StandardMethodCodec(),
-      registrar,
+      registrar.messenger,
     );
 
     final pluginInstance = FlutterOktaAuthSdkWeb();
